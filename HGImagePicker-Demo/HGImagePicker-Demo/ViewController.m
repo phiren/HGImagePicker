@@ -33,9 +33,7 @@
     imagePicker = [HGImagePicker new];
     [imagePicker showImagePicker:self withNavigationColor:[UIColor orangeColor] imagePicked:^(UIImage *image) {
         theImageView.image = image;
-    } imageCanceled:^{
-        NSLog(@"Image canceled");
-    }];
+    } imageCanceled:nil];
 }
 
 @end

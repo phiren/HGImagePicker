@@ -58,7 +58,10 @@ typedef void (^ImagePicked)(UIImage *image);
     UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"Cancel"
                                                            style:UIAlertActionStyleCancel
                                                          handler:^(UIAlertAction * _Nonnull action) {
-                                                             imageCanceledBlock();
+                                                             if (imageCanceledBlock) {
+                                                                 imageCanceledBlock();
+                                                             }
+                                                             
                                                          }];
     [alertController addAction:cancelAction];
     
@@ -72,13 +75,20 @@ typedef void (^ImagePicked)(UIImage *image);
 {
     [delegate dismissViewControllerAnimated:YES completion:nil];
     UIImage *originalImage = (UIImage *) [info objectForKey:UIImagePickerControllerOriginalImage];
-    imagePickedBlock(originalImage);
+    if(imagePickedBlock)
+    {
+        imagePickedBlock(originalImage);
+    }
+    
 }
 
 - (void)imagePickerControllerDidCancel:(UIImagePickerController *)picker
 {
     [delegate dismissViewControllerAnimated:YES completion:nil];
-    imageCanceledBlock();
+    if (imageCanceledBlock) {
+        imageCanceledBlock();    
+    }
+    
 }
 
 #pragma mark - Common Methods
